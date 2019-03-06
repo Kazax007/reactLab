@@ -1,5 +1,7 @@
 var express = require('express');
-const router = express.Router();
+var router = express.Router();
+
+const { createHash } = require('../utils');
 
 const User = require("../models/User");
 
@@ -33,3 +35,4 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+

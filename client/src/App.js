@@ -1,28 +1,34 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component , Fragment} from 'react';
+import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
+import 'normalize.css';
+import './styles/index.scss';
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
+import Me from "./pages/Me";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    setUser = (user) => this.setState({user});
+    render() {
+        return (
+            <Router>
+                <Fragment>
+                    <Route
+                        path="/login"
+                        render={() => <Login setUser={this.setUser} {...this.state}/>}
+                    />
+                    <Route
+                        path="/registration"
+                        render={() => <Registration setUser={this.setUser} {...this.state}/>}
+                    />
+                    <Route
+                        path="/me"
+                        render={() => <Me setUser={this.setUser} {...this.state}/>}
+                    />
+                </Fragment>
+            </Router>
+        )
+    }
 }
+
 
 export default App;
