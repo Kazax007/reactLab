@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const {AUTH_COOKIE_NAME} = require("../utils/const");
 const { createHash } = require('../utils');
 
 const User = require("../models/User");
@@ -17,7 +17,7 @@ router.get("/me", async (req, res) => { //метод возвраащает пр
 
     try {
         const user = await User.findOne({_id: userId});
-        res.json({status: "ok", user});
+        res.json({status: 200, user});
     } catch (err) {
         console.error(err)
     }
@@ -26,9 +26,9 @@ router.get("/me", async (req, res) => { //метод возвраащает пр
 router.post("/login", async (req, res) => {
     console.log("req.body login", req.body);
     //Переданные параметры запроса хранятся в req.body
-    res.cookie(AUTH_COOKIE_NAME, user.getJwtToken(), {  maxAge: 999999, httpOnly: true});
     const user = await User.findOne({login: req.body.login}); 
-    res.json({status: "ok", user});
+    res.cookie(AUTH_COOKIE_NAME, user.getJwtToken(), {  maxAge: 999999, httpOnly: true});
+    res.json({status: 200, user});
     // Для поиска пользователя необходимо вызвать
     // const user = await User.findOne({login: req.body.login});
 
@@ -45,11 +45,11 @@ router.post("/", async (req, res) => {
     const userExists = await User.findOne({login: req.body.login});
     if(!userExists){
         console.log("start registration");
-        res.cookie(AUTH_COOKIE_NAME, user.getJwtToken(), {  maxAge: 999999, httpOnly: true}); 
         const user = new User({login: req.body.login, password: createHash(req.body.password), first_name: req.body.first_name, last_name: req.body.last_name});
         try{
             user.save(); 
-            res.json({status: "ok", user});
+            res.cookie(AUTH_COOKIE_NAME, user.getJwtToken(), {  maxAge: 999999, httpOnly: true}); 
+            res.json({status: 200, user});
         }
         catch(e){
             res.json({status: "error", error: e});

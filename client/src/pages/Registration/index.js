@@ -5,6 +5,8 @@ import Input from "../../components/Input";
 import api from "../../requester";
 import validateResponse from "../../utils/validateResponse";
 import {withRouter} from "react-router-dom";
+import { Form, Container, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class Registration extends Component {
     state = {
@@ -33,42 +35,90 @@ class Registration extends Component {
 
         //Функция validateResponse проверит ответ и выдаст alert в случае ошибки
     };
-
     render() {
         return (
             <div className="registration-page">
-                <h2>Регистрация</h2>
-                <form onSubmit={this.registration}>
-                    <Input
-                        onChange={this.handleFieldChange}
-                        name = "first_name"
-                        placeholder="Имя"
-                        value={this.state.first_name}
-                    />
-                    <Input
-                        onChange={this.handleFieldChange}
-                        name = "last_name"
-                        placeholder="Фамилия"
-                        value={this.state.last_name}
-                    />
-                    <Input
-                        onChange={this.handleFieldChange}
-                        name = "login"
-                        placeholder="Логин"
-                        value={this.state.login}
-                    />
-                    <Input
-                        onChange={this.handleFieldChange}
-                        name = "password"
-                        placeholder="Пароль"
-                        type = "password"
-                        value={this.state.password}
-                    />
-                    <button>Регистрация</button>
-                </form>
+                        <h2>Регистрация</h2>
+                        <form onSubmit={this.registration}>
+                            <Form.Group controlId="formBasicName">
+                                <Form.Label>Name</Form.Label>
+                                <Input
+                                onChange={this.handleFieldChange}
+                                name = "first_name"
+                                placeholder="Name"
+                                value={this.state.first_name}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicLastName">
+                                <Form.Label>Last Name</Form.Label>
+                                <Input
+                                onChange={this.handleFieldChange}
+                                name = "last_name"
+                                placeholder="Last Name"
+                                value={this.state.last_name}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicLogin">
+                                <Form.Label>Login</Form.Label>
+                                <Input
+                                onChange={this.handleFieldChange}
+                                name = "login"
+                                placeholder="Login"
+                                value={this.state.login}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Input
+                                onChange={this.handleFieldChange}
+                                name = "password"
+                                placeholder="Пароль"
+                                type = "password"
+                                value={this.state.password}
+                                />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
+                        </form>
             </div>
         )
     }
+    // render() {
+    //     return (
+    //         <div className="registration-page">
+    //             <h2>Регистрация</h2>
+    //             <form onSubmit={this.registration}>
+    //                 <Input
+    //                     onChange={this.handleFieldChange}
+    //                     name = "first_name"
+    //                     placeholder="Имя"
+    //                     value={this.state.first_name}
+    //                 />
+    //                 <Input
+    //                     onChange={this.handleFieldChange}
+    //                     name = "last_name"
+    //                     placeholder="Фамилия"
+    //                     value={this.state.last_name}
+    //                 />
+    //                 <Input
+    //                     onChange={this.handleFieldChange}
+    //                     name = "login"
+    //                     placeholder="Логин"
+    //                     value={this.state.login}
+    //                 />
+    //                 <Input
+    //                     onChange={this.handleFieldChange}
+    //                     name = "password"
+    //                     placeholder="Пароль"
+    //                     type = "password"
+    //                     value={this.state.password}
+    //                 />
+    //                 <button>Регистрация</button>
+    //             </form>
+    //         </div>
+    //     )
+    // }
 }
 
 

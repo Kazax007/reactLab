@@ -1,9 +1,12 @@
 export default ({data}) => {
-    console.log("VALIDATE error", data);
-    if(data.status === "ok") {
+    if(data.status == 200) {
         console.log("VALIDATE ok");
-        return true
-    } else {
+        return true;
+    }
+    else if(data.status == 401){
+        return true;
+    }
+    else {
         console.log("VALIDATE error");
         alert(`Ошибка: ${data.error}`);
         return false;

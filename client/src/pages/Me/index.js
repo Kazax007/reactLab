@@ -19,7 +19,7 @@ class Me extends Component {
         }
         alert(response);
         validateResponse(response);
-        if (response.code == 401){
+        if (response.data.status == 401){
             history.push("/login");
         }
         else{

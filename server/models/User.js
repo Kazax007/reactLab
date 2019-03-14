@@ -2,6 +2,7 @@ var mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+const {AUTH_COOKIE_NAME} = require("../utils/const");
 
 var UserSchema = mongoose.Schema({
   login: String,
@@ -21,17 +22,31 @@ UserSchema.statics.checkAuth = () => (req, res, next) => {
   try {
     var decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
     if(decoded){
-      req.user = {_id: decoded};
+      req.user ={_id : decoded._id};
       next();
     }
   } catch(err) {
-    res.json({error: err});
+    res.json({status : 401, error: err});
   }
 };
 
+// UserSchema.methods.cheAuth = function (req) {
+//   var token = req.cookies[AUTH_COOKIE_NAME];
+//   try {
+//     var decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+//     if(decoded){
+//       return decoded._id;
+//     }
+//   } catch(err) {
+//     return err;
+//   }
+//   return 0;
+// }
+
 UserSchema.methods.getJwtToken = function () {
   const {_id, login} = this;
-  var token = jwt.sign({ _id, login }, process.env.JWT_TOKEN_SECRET);
+  var token = jwt.sign({_id : this._id}, process.env.JWT_TOKEN_SECRET);
+  return token;
 };
 
 var User = mongoose.model("User", UserSchema);
