@@ -10,6 +10,31 @@ class Login extends Component {
         login: "",
         password: ""
     };
+    componentDidMount(){
+        this.fetchUserProfile();
+    }
+
+    fetchUserProfile = async () => {
+        const {history} = this.props;
+        var response;
+        try{
+            response = await api.get('/users/me');
+        }
+        catch (err){
+            alert(err);
+        }
+        //alert(response);
+        validateResponse(response);
+        if (response.data.status == 401){
+            //history.push("/login");
+            return;
+        }
+        else{
+            //setUser(response.data.user);
+            history.push("/me");
+        }
+    };
+
     handleFieldChange = ({name,value}) => this.setState({[name] : value});
     login = async (e) => {
         e.preventDefault();
@@ -52,6 +77,11 @@ class Login extends Component {
         )
     }
 }
-
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
 
 export default withRouter(Login);

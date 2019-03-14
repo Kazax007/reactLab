@@ -17,7 +17,7 @@ class Me extends Component {
         catch (err){
             alert(err);
         }
-        alert(response);
+        //alert(response);
         validateResponse(response);
         if (response.data.status == 401){
             history.push("/login");
