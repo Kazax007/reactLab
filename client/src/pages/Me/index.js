@@ -2,6 +2,7 @@ import React, { Component , Fragment} from 'react';
 import {withRouter} from "react-router-dom";
 import api from "../../requester";
 import validateResponse from "../../utils/validateResponse";
+import { Form, Container, Row, Col, Button, Table } from 'react-bootstrap';
 
 class Me extends Component {
     componentDidMount() {
@@ -31,15 +32,40 @@ class Me extends Component {
         // использовать await + try/catch или .then((response, err) => {})
     };
 
+    edit = async (e) => {
+        e.preventDefault();
+        const {history} = this.props;
+        history.push("/edit");
+    };
+
     render(){
         const {user = {}} = this.props;
         return (
-            <div className="me">
-                <div className="me__profile">
-                    <p>Ваше имя: {user.first_name} {user.last_name}</p>
-                    <p>Ваш логин: {user.login}</p>
-                </div>
-            </div>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Col md="auto">
+                        <Table>
+                            <thead>
+                                <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Login</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>{user.first_name}</th>
+                                    <th>{user.last_name}</th>
+                                    <th>{user.login}</th>
+                                </tr>
+                            </tbody>
+                        </Table>
+                        <Button variant="info" type="submit" onClick={this.edit}>
+                                    Редактировать
+                        </Button>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }

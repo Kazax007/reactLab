@@ -5,6 +5,7 @@ import './styles/index.scss';
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Me from "./pages/Me";
+import Edit from "./pages/Edit";
 
 class App extends Component {
     setUser = (user) => this.setState({user});
@@ -24,6 +25,10 @@ class App extends Component {
                     <Route
                         path="/me"
                         render={() => <Me setUser={this.setUser} {...this.state}/>}
+                    />
+                    <Route
+                        path="/edit"
+                        render={() => <Edit setUser={this.setUser} {...this.state}/>}
                     />
                 </Fragment>
             </Router>

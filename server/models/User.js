@@ -30,6 +30,17 @@ UserSchema.statics.checkAuth = () => (req, res, next) => {
   }
 };
 
+UserSchema.methods.editSelf = async function (fields) {
+  // Необходимо отредактировать только поля, включённые в массив editable_fields
+  // Для этого можно использовать конструкцию for..in для итерирования объекта editable_fields
+  // И метод Array.includes(value) для проверки наличия знаения в массиве
+  const editable_fields = ['first_name', 'last_name', 'login'];
+  // Текущий документ пользователя доступен в контексте this
+  // чтобы забисать ему новое значение поля нужно сделать так: this.first_name = "Иван";
+  // Затем нужно вызвать метод this.save(), чтобы сохранить данные в БД
+  return this;
+};
+
 // UserSchema.methods.cheAuth = function (req) {
 //   var token = req.cookies[AUTH_COOKIE_NAME];
 //   try {
